@@ -19,8 +19,8 @@ export function CopyInit() {
       navigator.clipboard.writeText(code).then(() => {
         const original = btn.textContent;
         btn.textContent = "已复制";
-        btn.style.color = "var(--accent)";
-        btn.style.borderColor = "var(--accent)";
+        btn.style.color = "var(--moss)";
+        btn.style.borderColor = "color-mix(in srgb, var(--moss) 40%, transparent)";
         window.setTimeout(() => {
           if (original !== null) {
             btn.textContent = original;

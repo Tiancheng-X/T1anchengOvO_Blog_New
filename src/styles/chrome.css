@@ -2,29 +2,93 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
+/* 主体容器：宽版（hero/stats/卡片网格）*/
 .site-main {
   flex: 1;
   width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
 }
 
-/* Header */
+.container {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* 窄版 prose 容器（文章/关于正文）*/
+.container--prose {
+  max-width: var(--max-width);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* 区块纵向节奏：py-20 md:py-24, 区块间 border-t 细分隔 */
+.section {
+  padding: 5rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.section:first-of-type {
+  border-top: none;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 6rem 0;
+  }
+}
+
+/* ───────── Eyebrow 小标签 ───────── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.eyebrow__num {
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+/* ───────── Header ───────── */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
+  transition: box-shadow 300ms ease, border-color 300ms ease;
+}
+
+.site-header.is-scrolled {
+  box-shadow: var(--shadow-soft);
 }
 
 .site-header__inner {
-  max-width: var(--max-width);
+  max-width: var(--max-width-wide);
   margin: 0 auto;
   padding: 0.875rem 1.25rem;
   display: flex;
@@ -33,85 +97,290 @@
   gap: 1rem;
 }
 
+@media (min-width: 640px) {
+  .site-header__inner {
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* 左侧：圆形陶土字母徽标 + 衬线署名 + mono Blog 角标 */
 .site-header__brand {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: 0.01em;
-}
-
-.site-header__brand:hover {
-  color: var(--accent);
-}
-
-.site-nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.625rem;
+  color: var(--ink);
+}
+
+.site-header__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-pill);
+  background: var(--terra);
+  color: var(--paper);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  transition: background 200ms ease;
+}
+
+.site-header__brand:hover .site-header__avatar {
+  background: var(--terra-deep);
+}
+
+.site-header__name {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1;
+}
+
+.site-header__name-tag {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-left: 0.5rem;
+  opacity: 0.7;
+}
+
+/* 中间：锚点导航 */
+.site-nav {
+  display: none;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .site-nav {
+    display: flex;
+  }
 }
 
 .site-nav a {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+  position: relative;
+  color: var(--muted);
+  font-size: 0.875rem;
   font-weight: 500;
+  letter-spacing: 0.01em;
   transition: color 200ms ease;
 }
 
-.site-nav a:hover {
-  color: var(--accent);
+.site-nav a:hover,
+.site-nav a.is-active {
+  color: var(--terra-deep);
 }
 
-/* Footer */
-.site-footer {
-  border-top: 1px solid var(--border);
-  padding: 2rem 1.25rem;
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
-
-.site-footer__links {
+/* 右侧：在线胶囊 + 主题切换 */
+.site-header__actions {
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 0.5rem;
+  align-items: center;
+  gap: 0.875rem;
 }
 
-.site-footer__links a {
-  color: var(--text-secondary);
+.online-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.3125rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--white-ish);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--moss);
+  line-height: 1;
 }
 
-.site-footer__links a:hover {
-  color: var(--accent);
+.online-pill__dot {
+  position: relative;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: var(--radius-pill);
+  background: var(--moss);
 }
 
-/* Theme toggle */
+.online-pill__dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius-pill);
+  background: var(--moss);
+  opacity: 0.4;
+  animation: pulse 2.2s ease-out infinite;
+}
+
+@media (max-width: 640px) {
+  .online-pill__text {
+    display: none;
+  }
+  .online-pill {
+    padding: 0.3125rem;
+  }
+}
+
+/* 主题切换 */
 .theme-toggle {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.125rem;
+  font-size: 1.0625rem;
   padding: 0.25rem;
-  color: var(--text-secondary);
+  color: var(--muted);
   transition: color 200ms ease, transform 200ms ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
+  border-radius: var(--radius-pill);
 }
 
 .theme-toggle:hover {
-  color: var(--accent);
+  color: var(--terra);
   transform: scale(1.1);
 }
 
+/* 顶栏滚动进度条 */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+
+.scroll-progress__bar {
+  height: 100%;
+  width: 0;
+  background: var(--terra);
+  transition: width 80ms linear;
+}
+
+/* ───────── Footer ───────── */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 2.5rem 1.25rem;
+}
+
+.site-footer__inner {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-footer__copy {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.site-footer__signature {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.site-footer__signature em {
+  font-style: italic;
+  color: var(--terra);
+  font-weight: 500;
+}
+
+.site-footer__heart {
+  color: var(--terra);
+  font-style: normal;
+}
+
+.site-footer__links {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.site-footer__links a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.site-footer__links a:hover {
+  color: var(--terra);
+}
+
+/* ───────── Buttons ───────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.125rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: all 200ms ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-family: var(--font-sans);
+  line-height: 1;
+}
+
+.btn--primary {
+  background: var(--terra);
+  color: var(--paper);
+  border-color: var(--terra);
+}
+
+.btn--primary:hover {
+  background: var(--terra-deep);
+  border-color: var(--terra-deep);
+  color: var(--paper);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn--ghost:hover {
+  border-color: var(--terra);
+  color: var(--terra-deep);
+  transform: translateY(-1px);
+}
+
+.btn__arrow {
+  transition: transform 200ms ease;
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
 @media (max-width: 640px) {
-  .site-nav {
-    gap: 1rem;
-    font-size: 0.85rem;
-  }
-  .site-header__inner {
-    padding: 0.75rem 1rem;
+  .site-header__name-tag {
+    display: none;
   }
 }

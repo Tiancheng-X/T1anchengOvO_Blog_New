@@ -1,37 +1,193 @@
-/* Reveal on scroll */
+/* ───────── Reveal on scroll (JS 门控) ───────── */
+/* 无 JS 时元素直接可见 */
 .reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 500ms ease, transform 500ms ease;
+  opacity: 1;
+  transform: none;
 }
 
-.reveal.is-visible {
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+
+html.js .reveal.in {
   opacity: 1;
+  transform: none;
+}
+
+/* ───────── Line-mask 标题逐行上滑 ───────── */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em; /* 防止衬线下沿被裁 */
+}
+
+.line-mask__inner {
+  display: block;
+  transform: translateY(112%);
+}
+
+html.js .line-mask__inner {
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0ms);
+  will-change: transform;
+}
+
+html.js body.is-loaded .line-mask__inner {
   transform: translateY(0);
 }
 
+/* 无 JS 直接显形 */
+html:not(.js) .line-mask__inner {
+  transform: translateY(0);
+}
+
+/* reduced-motion 全局降级（见 tokens.css 末尾，此处补 line-mask 显形） */
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  html.js .line-mask__inner {
+    transform: translateY(0) !important;
   }
 }
 
-/* Focus outline for accessibility */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 2px;
+/* ───────── Text decode (scramble → 落定) ───────── */
+.decode {
+  display: inline-block;
 }
 
-/* Smooth color transition on theme switch */
+html.js .decode.is-decoding {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* ───────── Pulse (在线状态点) ───────── */
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* ───────── Accordion (Claude 风折叠, grid-rows 0fr→1fr) ───────── */
+.acc {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  overflow: hidden;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.acc:hover {
+  border-color: color-mix(in srgb, var(--terra) 40%, var(--line));
+}
+
+.acc__head {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 100%;
+  padding: 1.125rem 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: var(--ink);
+  transition: background 200ms ease;
+}
+
+.acc__head:hover {
+  background: var(--white-ish);
+}
+
+.acc__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--terra) 14%, transparent);
+  color: var(--terra);
+  flex-shrink: 0;
+}
+
+.acc__title {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  flex: 1;
+  letter-spacing: -0.005em;
+}
+
+.acc__meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.acc__chevron {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.acc.is-open .acc__chevron {
+  transform: rotate(180deg);
+  color: var(--terra);
+}
+
+.acc__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.acc.is-open .acc__body {
+  grid-template-rows: 1fr;
+}
+
+.acc__inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.acc__content {
+  padding: 0 1.25rem 1.25rem;
+}
+
+/* ───────── Hover lift (卡片) ───────── */
+.lift {
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 300ms ease, border-color 300ms ease;
+}
+
+.lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+  border-color: color-mix(in srgb, var(--terra) 40%, var(--line));
+}
+
+/* ───────── 主题切换平滑过渡 ───────── */
 body,
 .site-header,
 .post-card,
 .about__links,
 .tag-cloud a,
 .code-block,
-.code-block__bar {
+.code-block__bar,
+.acc {
   transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
 }

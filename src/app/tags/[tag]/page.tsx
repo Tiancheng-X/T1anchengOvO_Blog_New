@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getAllTags, getPostsByTag } from "@/lib/posts";
 import { PostCard } from "@/components/PostCard";
 import { Reveal } from "@/components/Reveal";
+import { Eyebrow } from "@/components/Eyebrow";
 
 export const dynamicParams = false;
 
@@ -32,22 +33,26 @@ export default async function TagPage({
   if (posts.length === 0) notFound();
 
   return (
-    <>
-      <h1 className="section-title">
-        标签：<span style={{ color: "var(--accent)" }}>{tag}</span>
-      </h1>
-      <div className="post-grid">
-        {posts.map((p) => (
-          <Reveal key={p.slug}>
+    <div className="container" style={{ padding: "3.5rem 1.25rem 3rem" }}>
+      <div className="page-hero">
+        <Eyebrow num="TAG">FILTERED</Eyebrow>
+        <h1 className="page-hero__title">
+          标签：<em style={{ color: "var(--terra)", fontStyle: "italic" }}>{tag}</em>
+        </h1>
+        <p className="page-hero__sub">共 {posts.length} 篇文章。</p>
+      </div>
+      <div className="post-grid" style={{ marginTop: "2rem" }}>
+        {posts.map((p, i) => (
+          <Reveal key={p.slug} delay={i * 80}>
             <PostCard post={p} />
           </Reveal>
         ))}
       </div>
-      <p style={{ marginTop: "2rem" }}>
-        <Link href="/tags/" style={{ color: "var(--text-secondary)" }}>
+      <p style={{ marginTop: "2.5rem" }}>
+        <Link href="/tags/" className="btn btn--ghost">
           ← 查看全部标签
         </Link>
       </p>
-    </>
+    </div>
   );
 }

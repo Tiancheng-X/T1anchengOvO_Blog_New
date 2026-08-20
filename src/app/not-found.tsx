@@ -1,38 +1,44 @@
 import Link from "next/link";
+import { Eyebrow } from "@/components/Eyebrow";
+import { ArrowRight } from "@/components/icons";
 
 export default function NotFound() {
   return (
-    <div style={{ textAlign: "center", padding: "4rem 1rem" }}>
+    <div
+      className="container container--prose"
+      style={{
+        textAlign: "center",
+        padding: "6rem 1.25rem",
+      }}
+    >
+      <Eyebrow num="404" className="not-found-eyebrow">
+        LOST
+      </Eyebrow>
       <h1
         style={{
           fontFamily: "var(--font-serif)",
-          fontSize: "clamp(3rem, 8vw, 5rem)",
-          color: "var(--accent)",
+          fontSize: "clamp(4rem, 10vw, 6rem)",
+          color: "var(--terra)",
           marginBottom: "1rem",
+          letterSpacing: "-0.03em",
+          lineHeight: 1,
         }}
       >
         404
       </h1>
       <p
         style={{
-          color: "var(--text-secondary)",
+          color: "var(--muted)",
           fontSize: "1.125rem",
-          marginBottom: "2rem",
+          marginBottom: "2.25rem",
+          fontFamily: "var(--font-serif)",
+          fontStyle: "italic",
         }}
       >
         这里什么都没有，可能从未存在过。
       </p>
-      <Link
-        href="/"
-        style={{
-          display: "inline-block",
-          padding: "0.625rem 1.5rem",
-          border: "1px solid var(--border)",
-          borderRadius: "999px",
-          color: "var(--accent)",
-        }}
-      >
-        ← 回首页
+      <Link href="/" className="btn btn--primary">
+        回首页 <ArrowRight width={14} height={14} />
       </Link>
     </div>
   );
