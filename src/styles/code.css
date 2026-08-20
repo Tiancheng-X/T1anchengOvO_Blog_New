@@ -1,0 +1,100 @@
+/* Claude-style code block wrapper */
+.code-block {
+  margin: 1.5rem 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+}
+
+.code-block__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: color-mix(in srgb, var(--border) 50%, var(--code-bg));
+  border-bottom: 1px solid var(--border);
+}
+
+.code-block__dots {
+  display: flex;
+  gap: 0.375rem;
+  margin-right: 0.5rem;
+}
+
+.code-block__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.code-block__dot--red {
+  background: #FF5F57;
+}
+
+.code-block__dot--yellow {
+  background: #FEBC2E;
+}
+
+.code-block__dot--green {
+  background: #28C840;
+}
+
+.code-block__lang {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: lowercase;
+  flex: 1;
+  margin-left: 0.5rem;
+}
+
+.code-block__copy {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.code-block__copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  background: transparent !important;
+}
+
+.code-block code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* shiki dual theme via inline CSS variables */
+.code-block code span {
+  color: var(--shiki-light, inherit);
+}
+
+[data-theme="dark"] .code-block code span {
+  color: var(--shiki-dark, var(--shiki-light, inherit));
+}
+
+/* Inline code (not in pre) */
+.prose :not(pre) > code {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--accent);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-family: var(--font-mono);
+}

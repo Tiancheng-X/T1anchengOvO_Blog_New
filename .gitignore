@@ -1,0 +1,22 @@
+# dependencies
+node_modules
+
+# build output
+out
+.next
+
+# misc
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts.bak
+
+# env
+.env*.local
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# workbuddy tooling state (local only)
+.workbuddy

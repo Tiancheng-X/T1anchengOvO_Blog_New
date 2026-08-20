@@ -1,0 +1,83 @@
+:root {
+  /* 亮色 — Claude Design Language */
+  --bg: #FBF9F5;
+  --text: #1F1E1C;
+  --text-secondary: #6E6B65;
+  --accent: #D97757;
+  --accent-hover: #C05621;
+  --card: #FFFFFF;
+  --border: #E8E5DF;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --code-bg: #F7F5F0;
+  --code-text: #1F1E1C;
+
+  /* 字体 */
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Consolas, "Courier New", monospace;
+
+  /* 布局 */
+  --max-width: 880px;
+  --radius: 1rem;
+}
+
+[data-theme="dark"] {
+  --bg: #1F1E1C;
+  --text: #E8E5DF;
+  --text-secondary: #A8A39B;
+  --accent: #D97757;
+  --accent-hover: #C05621;
+  --card: #2A2825;
+  --border: #3A3835;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --code-bg: #15140F;
+  --code-text: #E8E5DF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  min-height: 100vh;
+  transition: background 200ms ease, color 200ms ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--text);
+}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FBF9F5"/>
+      <stop offset="1" stop-color="#F2EDE3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="60" y="60" width="1080" height="510" rx="32" fill="#FFFFFF" stroke="#E8E5DF" stroke-width="2"/>
+  <circle cx="120" cy="180" r="10" fill="#FF5F57"/>
+  <circle cx="155" cy="180" r="10" fill="#FEBC2E"/>
+  <circle cx="190" cy="180" r="10" fill="#28C840"/>
+  <text x="120" y="180" font-family="ui-monospace, Consolas, monospace" font-size="20" fill="#6E6B65" text-anchor="start">
+    <tspan x="230" dy="0">claude-style-window</tspan>
+  </text>
+  <text x="120" y="350" font-family="Georgia, serif" font-size="84" font-weight="700" fill="#1F1E1C">天成的小窝</text>
+  <line x1="120" y1="395" x2="220" y2="395" stroke="#D97757" stroke-width="4"/>
+  <text x="120" y="450" font-family="system-ui, sans-serif" font-size="32" fill="#6E6B65">写代码 · 读世界 · 记所思</text>
+  <text x="120" y="510" font-family="system-ui, sans-serif" font-size="22" fill="#D97757">by T1anchengOvO</text>
+</svg>
